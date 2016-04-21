@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import io.sheetal.entity.Writer;
 import io.sheetal.exception.WriterAlreadyExistsException;
 import io.sheetal.exception.WriterNotFoundException;
-import io.sheetal.exception.WriterRoleAlreadyExistsException;
 import io.sheetal.repository.WriterRepository;
 
 @Service
@@ -34,7 +33,7 @@ public class WriterServiceImpl implements WriterService{
 	}
 
 	@Override
-	public Writer create(Writer writer) throws WriterAlreadyExistsException, WriterRoleAlreadyExistsException {
+	public Writer create(Writer writer) throws WriterAlreadyExistsException {
 		Writer existingWriter=repository.findByWriterName(writer.getWriterName());
 		if(existingWriter!=null)
 			throw new WriterAlreadyExistsException();

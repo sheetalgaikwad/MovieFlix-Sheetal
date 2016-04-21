@@ -1,9 +1,12 @@
 package io.sheetal.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -14,7 +17,7 @@ import lombok.Data;
 @Entity
 @Table
 @Data
-public class Language {
+public class Language implements Serializable {
 	
 	@Id
 	@GenericGenerator(strategy = "uuid2",name = "myuuid")
@@ -22,7 +25,8 @@ public class Language {
 	private String languageId;
 	private String languageName;
 	
-	//@ManyToOne (cascade=CascadeType.ALL)
-	//private Program program;
+	@ManyToOne
+	@JoinTable(name="program_language")
+	Program program;
 
 }

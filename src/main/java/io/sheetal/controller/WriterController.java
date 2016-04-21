@@ -11,10 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.sheetal.entity.Writer;
-import io.sheetal.entity.WriterRoles;
 import io.sheetal.exception.WriterAlreadyExistsException;
 import io.sheetal.exception.WriterNotFoundException;
-import io.sheetal.exception.WriterRoleAlreadyExistsException;
 import io.sheetal.service.WriterService;
 
 @RestController
@@ -35,11 +33,7 @@ public class WriterController {
 	}
 
 	@RequestMapping(value="/{writerRoleType}", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE,produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public Writer create(@PathVariable("writerRoleType")String writerRoleType, @RequestBody Writer writer) throws WriterAlreadyExistsException, WriterRoleAlreadyExistsException {
-		WriterRoles writerRoles=new WriterRoles();
-		writerRoles.setWriterRoleType(writerRoleType);		
-		WriterRoleController wrc=new WriterRoleController();		
-		writerRoles=wrc.create(writerRoles);
+	public Writer create(@PathVariable("writerRoleType")String writerRoleType, @RequestBody Writer writer) throws WriterAlreadyExistsException {
 		return service.create(writer);
 	}
 

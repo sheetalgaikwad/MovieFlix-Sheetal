@@ -8,10 +8,7 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
-import io.sheetal.controller.WriterRoleController;
 import io.sheetal.entity.Writer;
-import io.sheetal.entity.WriterRoles;
-import io.sheetal.exception.WriterRoleAlreadyExistsException;
 
 @Repository
 public class WriterRepositoryImpl implements WriterRepository {
@@ -43,7 +40,7 @@ public class WriterRepositoryImpl implements WriterRepository {
 	}
 
 	@Override
-	public Writer create(Writer writer) throws WriterRoleAlreadyExistsException {
+	public Writer create(Writer writer){
 		
 		em.persist(writer);
 		return writer;

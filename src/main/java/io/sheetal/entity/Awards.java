@@ -1,5 +1,7 @@
 package io.sheetal.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,7 +14,7 @@ import lombok.Data;
 @Entity
 @Table
 @Data
-public class Awards {
+public class Awards implements Serializable{
 	@Id
 	@GenericGenerator(strategy = "uuid2",name = "myuuid")
 	@GeneratedValue(generator="myuuid")

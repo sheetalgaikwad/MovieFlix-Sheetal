@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.sheetal.entity.Rating;
-import io.sheetal.exception.RatingAlreadyPresentException;
+import io.sheetal.exception.RatingAlreadyExistsException;
 import io.sheetal.exception.RatingNotFoundException;
 import io.sheetal.service.RatingService;
 
@@ -33,7 +33,7 @@ public class RatingController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE,produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public Rating create(@RequestBody Rating rating) throws RatingAlreadyPresentException {
+	public Rating create(@RequestBody Rating rating) throws RatingAlreadyExistsException {
 		return service.create(rating);
 	}
 

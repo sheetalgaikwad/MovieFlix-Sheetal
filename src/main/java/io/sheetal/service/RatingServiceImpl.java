@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import io.sheetal.entity.Rating;
-import io.sheetal.exception.RatingAlreadyPresentException;
+import io.sheetal.exception.RatingAlreadyExistsException;
 import io.sheetal.exception.RatingNotFoundException;
 import io.sheetal.repository.RatingRepository;
 
@@ -42,10 +42,10 @@ public class RatingServiceImpl implements RatingService {
 	}
 
 	@Override
-	public Rating create(Rating rating) throws RatingAlreadyPresentException {
+	public Rating create(Rating rating) throws RatingAlreadyExistsException {
 		Rating existing=repository.findByRatingType(rating.getRatingType());
 		if(existing!=null)
-			throw new RatingAlreadyPresentException();
+			throw new RatingAlreadyExistsException();
 		else
 			return repository.create(rating);	
 	}

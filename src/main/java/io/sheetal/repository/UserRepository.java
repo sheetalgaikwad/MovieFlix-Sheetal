@@ -9,6 +9,7 @@ public interface UserRepository {
 	public List<User> findAllUsers();
 	public User findOne(String id);
 	public User findByEmail(String email);
+	public User findByUserName(String userName);
 	public User create(User user);
 	public User update(User user);
 	public void delete(User user);

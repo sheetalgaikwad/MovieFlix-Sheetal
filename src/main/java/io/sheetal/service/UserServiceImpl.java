@@ -1,12 +1,19 @@
 package io.sheetal.service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import io.sheetal.entity.User;
+import io.sheetal.entity.UserRole;
 import io.sheetal.exception.UserAlreadyExistsException;
 import io.sheetal.exception.UserNotFoundException;
 import io.sheetal.repository.UserRepository;
@@ -65,6 +72,26 @@ public class UserServiceImpl implements UserService{
 		} 
 		else{
 			repository.delete(existing);
+		}
+	}
+
+	@Override
+	public User findByUserName(User user) throws UserNotFoundException {
+		User existing=repository.findByUserName(user.getUsername());
+		if(existing==null){
+			throw new UserNotFoundException();		
+		} 
+		else
+			return existing;
+	}
+	
+	public void checkPermission(Set<UserRole> authorities)
+	{		
+		for(UserRole userRole:authorities){
+			if(userRole.getRole().trim().equals("admin"))
+				System.out.println("Permitted!");
+		else
+			System.out.println("Permission denied!");
 		}
 	}
 

@@ -1,5 +1,6 @@
 package io.sheetal.entity;
 
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.time.Year;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -26,7 +28,7 @@ import lombok.Data;
 @Entity
 @Table
 @Data
-public class Program {
+public class Program implements Serializable {
 	
 	@Id
 	@GenericGenerator(strategy = "uuid2",name = "myuuid")
@@ -37,34 +39,34 @@ public class Program {
 	private Date released;
 	private int runtime;
 	private String plot;
-	//private poster (jpeg);
+	
 	private int metascore;
 	private double imdbRating;
 	private BigInteger imdbVotes;
 	private String imdbId;	
 	
-	@OneToMany
+	@Column(columnDefinition="mediumBlob")
+	private byte[] poster;
+	
+	@OneToMany(mappedBy="program")
 	private List<Genre> genres;
 	
-	 @OneToMany(cascade = {CascadeType.ALL})
-	    @JoinTable(name="program_language", 
-	          joinColumns=@JoinColumn(name="program_programId", referencedColumnName="programId"),
-	          inverseJoinColumns=@JoinColumn(name="languages_languageId",referencedColumnName="languageId"))	
+	@OneToMany(mappedBy="program")
 	private List<Language> languages;
 	
-	@OneToMany
+	@OneToMany(mappedBy="program")
 	private List<Country> countries;
 	
-	@OneToMany
+	@OneToMany(mappedBy="program")
 	private List<Actor> actors;
 	
-	@OneToMany
+	@OneToMany(mappedBy="program")
 	private List<Director> directors;
 	
-	@OneToMany(cascade = {CascadeType.ALL})
+	@OneToMany(mappedBy="program")
 	private List<Writer> writers;
 	
-	@OneToOne(cascade = {CascadeType.ALL})
+	@OneToOne(cascade = {CascadeType.ALL})	
 	private Rating rating;
 	
 	@OneToOne(cascade = {CascadeType.ALL})

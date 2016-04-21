@@ -9,6 +9,7 @@ import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 
 import io.sheetal.entity.User;
+import io.sheetal.entity.UserRole;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository{
@@ -38,11 +39,22 @@ public class UserRepositoryImpl implements UserRepository{
 		else
 			return null;
 	}
-
+	
+	@Override
+	public User findByUserName(String userName) {
+		TypedQuery<User> query=em.createQuery("SELECT u from User u where u.username=:username",User.class);
+		query.setParameter("username",userName);
+		List<User> userList=query.getResultList();
+		if(userList!=null && userList.size()==1)
+			return userList.get(0);
+		else
+			return null;
+	}
+	
 	@Override
 	public User create(User user) {
-		 em.persist(user);
-		 return user;
+		em.persist(user);
+		return user;
 	}
 
 	@Override
@@ -55,6 +67,10 @@ public class UserRepositoryImpl implements UserRepository{
 		em.remove(user);
 		
 	}
+
+	
+
+	
 
 
 }

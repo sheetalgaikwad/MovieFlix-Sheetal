@@ -1,9 +1,13 @@
 package io.sheetal.entity;
 
+import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
@@ -18,7 +22,7 @@ import lombok.Data;
 @Table
 @Data
 @NamedQuery(name = "User.findByEmail", query = "SELECT u from User u WHERE u.email=:pEmail")
-public class User {
+public class User implements Serializable {
 
 	@Id
 	@GenericGenerator(strategy = "uuid2",name = "myuuid")
@@ -26,11 +30,17 @@ public class User {
 	private String id;
 	private String firstName;
 	private String lastName;
+	private String username;
+	private String password;
 	
 	@Column(unique=true)
 	private String email;
 	
-	@OneToMany
-	private List<Contact> contacts;
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+	private Set<UserRole> userRoles;
+	
+	
+	
+	
 }
   

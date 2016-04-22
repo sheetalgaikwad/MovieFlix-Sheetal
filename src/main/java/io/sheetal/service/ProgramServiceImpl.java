@@ -1,5 +1,6 @@
 package io.sheetal.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,5 +60,10 @@ public class ProgramServiceImpl implements ProgramService{
 		else
 			repository.delete(existingProgram);
 		
+	}	
+
+	@Override
+	public List<Program> findByGenre(String genre) {
+		return repository.findByGenre(genre);
 	}
 }

@@ -1,5 +1,7 @@
 package io.sheetal.test.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.junit.Before;
@@ -12,6 +14,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import io.sheetal.entity.Genre;
 import io.sheetal.entity.Program;
 import io.sheetal.exception.ProgramAlreadyExistsException;
 import io.sheetal.exception.ProgramNotFoundException;
@@ -32,6 +35,7 @@ public class ProgramServiceTest {
 	private ProgramService service=new ProgramServiceImpl();
 	
 	private Program program;
+	private Genre genre;
 	
 	@Before
 	public void setup(){
@@ -39,6 +43,13 @@ public class ProgramServiceTest {
 		program=new Program();
 		program.setTitle("Friends");
 		program.setProgramId(UUID.randomUUID().toString());
+		genre=new Genre();
+		genre.setGenreType("comedy");
+		genre.setGenreId(UUID.randomUUID().toString());		
+		
+		List<Genre> genreList=new ArrayList<>();
+		genreList.add(genre);
+		program.setGenres(genreList);
 	}	
 	
 	@Test
@@ -48,6 +59,12 @@ public class ProgramServiceTest {
 		Mockito.verify(repository).findAllPrograms();		
 	}
 	
+	@Test
+	public void testFindByGenre()
+	{
+		service.findByGenre(genre.getGenreType());
+		Mockito.verify(repository).findByGenre(genre.getGenreType());		
+	}
 	
 	@Test
 	public void testFindOneProgram() throws ProgramNotFoundException

@@ -1,5 +1,6 @@
 package io.sheetal.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,70 +11,80 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.sheetal.entity.Genre;
-import io.sheetal.exception.GenreAlreadyExistsException;
-import io.sheetal.exception.GenreNotFoundException;
-import io.sheetal.service.GenreService;
+import io.sheetal.entity.Program;
+import io.sheetal.exception.ProgramAlreadyExistsException;
+import io.sheetal.exception.ProgramNotFoundException;
+import io.sheetal.service.ProgramService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
-@RequestMapping(value="/genres")
-public class GenreController {
+@RequestMapping(value="/programs")
+public class ProgramController {
 
 	@Autowired
-	private GenreService service;	
+	private ProgramService service;	
 	
 	@RequestMapping(method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
-	@ApiOperation(value = "find all genres", notes="finds all genre")
+	@ApiOperation(value = "find all programs", notes="finds a program")
 	@ApiResponses(value={
 			@ApiResponse(code=200, message="success"),
 			@ApiResponse(code=500, message="internal server error")})
-	public List<Genre> findAllGenres() {
-		return service.findAllGenres();
+	public List<Program> findAllPrograms() {
+		return service.findAllPrograms();
 	}
 
 	@RequestMapping(value="/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
-	@ApiOperation(value = "find one genre", notes="finds a genre")
+	@ApiOperation(value = "find one program", notes="finds a program")
 	@ApiResponses(value={
 			@ApiResponse(code=200, message="success"),
-			@ApiResponse(code=404, message="genre not found"),
+			@ApiResponse(code=404, message="program not found"),
 			@ApiResponse(code=500, message="internal server error")})
-	public Genre findOneGenre(@PathVariable("id")String genreId) throws GenreNotFoundException {
-		return service.findOneGenre(genreId);
+	public Program findOneProgram(@PathVariable("id")String programId) throws ProgramNotFoundException {
+		return service.findOneProgram(programId);
 	}
+	
+	@RequestMapping(value="/genre/{genre}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ApiOperation(value = "find programs by genre", notes="finds program by genre")
+	@ApiResponses(value={
+			@ApiResponse(code=200, message="success"),
+			@ApiResponse(code=500, message="internal server error")})
+	public List<Program> findByGenre(@PathVariable("genre")String genre){
+		return service.findByGenre(genre);
+	}
+	
 
 	@RequestMapping(method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE,produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
-	@ApiOperation(value = "create one genre", notes="creates a genre")
+	@ApiOperation(value = "create a program", notes="creates a program")
 	@ApiResponses(value={
 			@ApiResponse(code=200, message="success"),
 			@ApiResponse(code=400, message="bad request"),
 			@ApiResponse(code=500, message="internal server error")})
-	public Genre create(@RequestBody Genre genre) throws GenreAlreadyExistsException {
-		return service.create(genre);
+	public Program create(@RequestBody Program program) throws ProgramAlreadyExistsException {
+		return service.create(program);
 	}
 
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE,produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
-	@ApiOperation(value = "update genre", notes="update a genre")
+	@ApiOperation(value = "update program", notes="updates a program")
 	@ApiResponses(value={
 			@ApiResponse(code=200, message="success"),
-			@ApiResponse(code=404, message="genre not found"),
-			@ApiResponse(code=400, message="bad request"),
+			@ApiResponse(code=404, message="program not found"),
 			@ApiResponse(code=500, message="internal server error")})
-	public Genre update(@PathVariable("id") String genreId, @RequestBody Genre genre) throws GenreNotFoundException {
-		return service.update(genre);
+	public Program update(@PathVariable("id") String programId, @RequestBody Program program) throws ProgramNotFoundException {
+		return service.update(program);
 	} 
 
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE, consumes=MediaType.APPLICATION_JSON_UTF8_VALUE,produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
-	@ApiOperation(value = "delete one genre", notes="deletes a genre")
+	@ApiOperation(value = "delete one program", notes="delets a program")
 	@ApiResponses(value={
 			@ApiResponse(code=200, message="success"),
-			@ApiResponse(code=404, message="genre not found"),
+			@ApiResponse(code=404, message="program not found"),
 			@ApiResponse(code=500, message="internal server error")})
-	public void delete(@PathVariable("id") String genreId) throws GenreNotFoundException {
-		service.delete(genreId);
+	public void delete(@PathVariable("id") String programId) throws ProgramNotFoundException {
+		service.delete(programId);
 	}
 
 }
+
 

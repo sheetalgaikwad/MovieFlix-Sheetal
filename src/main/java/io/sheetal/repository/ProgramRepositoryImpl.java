@@ -1,5 +1,6 @@
 package io.sheetal.repository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -9,6 +10,7 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 
+import io.sheetal.entity.Genre;
 import io.sheetal.entity.Language;
 import io.sheetal.entity.Program;
 
@@ -59,6 +61,19 @@ public class ProgramRepositoryImpl implements ProgramRepository {
 	public void delete(Program program) {
 		em.remove(program);
 		
+	}
+	
+	public List<Program> findByGenre(String genreType) {
+		
+		TypedQuery<Genre> query=em.createQuery("SELECT g from Genre g where g.genreType=:genreType",Genre.class);
+		query.setParameter("genreType",genreType);
+		Genre g=query.getSingleResult();
+		String genreId=g.getGenreId();		
+		
+		TypedQuery<Program> query2=em.createQuery("SELECT p from Program p INNER JOIN Program-Genre g ON p.programId=g.program_programId where g.genreId=:genreId",Program.class);
+		query2.setParameter("genreId",genreId);
+		List<Program> programList=query2.getResultList();
+		return programList;
 	}
 
 }

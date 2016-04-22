@@ -1,6 +1,7 @@
 package io.sheetal.test.Repository;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -19,6 +20,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import io.sheetal.entity.Genre;
 import io.sheetal.entity.Program;
 import io.sheetal.entity.Rating;
 import io.sheetal.repository.ProgramRepository;
@@ -35,11 +37,15 @@ public class ProgramRepositoryTest {
 	@Mock
 	private TypedQuery<Program> query;
 	
+	@Mock
+	private TypedQuery<Genre> genreQuery;
+	
 	@InjectMocks
 	private  ProgramRepository repository=new ProgramRepositoryImpl();
 	
 	private Program program;
 	private Rating rating;
+	private Genre genre;
 	@Before
 	public void setup(){
 		MockitoAnnotations.initMocks(this);
@@ -52,6 +58,15 @@ public class ProgramRepositoryTest {
 		program.setRating(rating);
 		
 		program.setProgramId(UUID.randomUUID().toString());
+		
+		genre=new Genre();
+		genre.setGenreType("comedy");
+		genre.setGenreId(UUID.randomUUID().toString());
+		
+		
+		List<Genre> genreList=new ArrayList<>();
+		genreList.add(genre);
+		program.setGenres(genreList);
 	}	
 	
 	@Test
@@ -67,6 +82,23 @@ public class ProgramRepositoryTest {
 		//Mockito.verify(query).getResultList();
 	}
 	
+	@Test
+	public void testFindByGenre()
+	{
+		Genre expectedGenre=genre;
+		List<Program> expected=Arrays.asList(program);
+		
+		Mockito.when(em.createQuery("SELECT g from Genre g where g.genreType=:genre")).thenReturn(genreQuery);
+		Mockito.when(genreQuery.getSingleResult()).thenReturn(expectedGenre);
+		
+		Mockito.when(em.createQuery("SELECT p from Program p INNER JOIN Program-Genre g ON p.programId=g.program_programId where g.genreId=:genreId",Program.class)).thenReturn(query);
+		Mockito.when(query.getResultList()).thenReturn(expected);		
+		
+		List<Program> actual=repository.findByGenre(genre.getGenreType());
+		Assert.assertEquals(expected, actual);		
+	}
+	
+		
 	@Test
 	public void testFindOneProgram()
 	{

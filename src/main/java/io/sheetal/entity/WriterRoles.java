@@ -17,9 +17,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 import lombok.Data;
 
-@Entity
-@Table
-@Data
 public class WriterRoles {
 
 	@Id

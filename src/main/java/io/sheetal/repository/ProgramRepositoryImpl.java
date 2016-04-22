@@ -45,9 +45,6 @@ public class ProgramRepositoryImpl implements ProgramRepository {
 
 	@Override
 	public Program create(Program program) {
-		List<Language> language=program.getLanguages(); 
-		for(Language l:language)
-			em.persist(l);
 		em.persist(program);
 		return program;
 	}

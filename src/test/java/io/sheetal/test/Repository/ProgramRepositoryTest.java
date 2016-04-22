@@ -3,7 +3,9 @@ package io.sheetal.test.Repository;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.EntityManager;
@@ -64,7 +66,7 @@ public class ProgramRepositoryTest {
 		genre.setGenreId(UUID.randomUUID().toString());
 		
 		
-		List<Genre> genreList=new ArrayList<>();
+		Set<Genre> genreList=new HashSet<>();
 		genreList.add(genre);
 		program.setGenres(genreList);
 	}	

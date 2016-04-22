@@ -24,9 +24,4 @@ public class Language implements Serializable {
 	@GeneratedValue(generator="myuuid")
 	private String languageId;
 	private String languageName;
-	
-	@ManyToOne
-	@JoinTable(name="program_language")
-	Program program;
-
 }

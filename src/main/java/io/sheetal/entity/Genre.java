@@ -26,8 +26,6 @@ public class Genre implements Serializable {
 	private String genreId;
 	private String genreType;
 	
-	@ManyToOne
-	@JoinTable(name="program_genre")
-	Program program;
+	
 
 }

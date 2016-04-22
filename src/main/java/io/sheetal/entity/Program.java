@@ -48,23 +48,41 @@ public class Program implements Serializable {
 	@Column(columnDefinition="mediumBlob")
 	private byte[] poster;
 	
-	@OneToMany(mappedBy="program")
-	private List<Genre> genres;
+	@OneToMany(fetch=FetchType.LAZY, cascade = {CascadeType.ALL})
+	@JoinTable(name = "program_genre",
+    	joinColumns = @JoinColumn(name = "Program_programId"),
+    inverseJoinColumns = @JoinColumn(name = "genreId"))
+	private Set<Genre> genres;
 	
-	@OneToMany(mappedBy="program")
-	private List<Language> languages;
+	@OneToMany(fetch=FetchType.LAZY, cascade = {CascadeType.ALL})
+	@JoinTable(name = "program_language",
+    	joinColumns = @JoinColumn(name = "Program_programId"),
+    inverseJoinColumns = @JoinColumn(name = "languageId"))
+	private Set<Language> languages;
 	
-	@OneToMany(mappedBy="program")
-	private List<Country> countries;
+	@OneToMany(fetch=FetchType.LAZY, cascade = {CascadeType.ALL})
+	@JoinTable(name = "program_country",
+    	joinColumns = @JoinColumn(name = "Program_programId"),
+    inverseJoinColumns = @JoinColumn(name = "countryId"))
+	private Set<Country> countries;
 	
-	@OneToMany(mappedBy="program")
-	private List<Actor> actors;
+	@OneToMany(fetch=FetchType.LAZY, cascade = {CascadeType.ALL})
+	@JoinTable(name = "program_actor",
+    	joinColumns = @JoinColumn(name = "Program_programId"),
+    inverseJoinColumns = @JoinColumn(name = "actorId"))
+	private Set<Actor> actors;
 	
-	@OneToMany(mappedBy="program")
-	private List<Director> directors;
+	@OneToMany(fetch=FetchType.LAZY, cascade = {CascadeType.ALL})
+	@JoinTable(name = "program_director",
+    	joinColumns = @JoinColumn(name = "Program_programId"),
+    inverseJoinColumns = @JoinColumn(name = "directorId"))
+	private Set<Director> directors;
 	
-	@OneToMany(mappedBy="program")
-	private List<Writer> writers;
+	@OneToMany(fetch=FetchType.LAZY, cascade = {CascadeType.ALL})
+	@JoinTable(name = "program_writer",
+    	joinColumns = @JoinColumn(name = "Program_programId"),
+    inverseJoinColumns = @JoinColumn(name = "writerId"))
+	private Set<Writer> writers;
 	
 	@OneToOne(cascade = {CascadeType.ALL})	
 	private Rating rating;
@@ -74,15 +92,5 @@ public class Program implements Serializable {
 	
 	@OneToOne(cascade = {CascadeType.ALL})
 	private ProgramType programType;
-	
-	public Program()
-	{
-		languages=new ArrayList<>();
-	}
-	
-	public void add(Language language)
-	{
-		languages.add(language);
-	}
 
 }

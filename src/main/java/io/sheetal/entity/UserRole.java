@@ -2,6 +2,7 @@ package io.sheetal.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,10 +26,8 @@ public class UserRole implements Serializable{
 	@GenericGenerator(strategy = "uuid2",name = "myuuid")
 	@GeneratedValue(generator="myuuid")
 	private String userRoleId;
+	
+	@Column(unique=true)
 	private String role;
-	
-	@ManyToOne
-	@JoinTable(name="user_userrole")
-	User user;
-	
+		
 }

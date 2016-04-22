@@ -24,7 +24,5 @@ public class Country implements Serializable{
 	private String countryId;
 	private String countryName;
 
-	@ManyToOne
-	@JoinTable(name="program_country")
-	Program program;
+	
 }

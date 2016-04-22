@@ -1,7 +1,9 @@
 package io.sheetal.test.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.junit.Before;
@@ -47,7 +49,7 @@ public class ProgramServiceTest {
 		genre.setGenreType("comedy");
 		genre.setGenreId(UUID.randomUUID().toString());		
 		
-		List<Genre> genreList=new ArrayList<>();
+		Set<Genre> genreList=new HashSet<>();
 		genreList.add(genre);
 		program.setGenres(genreList);
 	}	

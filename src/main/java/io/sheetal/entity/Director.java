@@ -24,7 +24,5 @@ public class Director implements IPerson, Serializable {
 	private String directorId;
 	private String directorName;	
 	
-	@ManyToOne
-	@JoinTable(name="program_director")
-	Program program;
+	
 }

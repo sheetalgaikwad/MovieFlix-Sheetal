@@ -25,8 +25,6 @@ public class Writer implements IPerson, Serializable{
 	private String writerName;
 	private String writerRole;
 	
-	@ManyToOne
-	@JoinTable(name="program_writer")
-	Program program;
+	
 	
 }

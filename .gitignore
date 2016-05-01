@@ -1,0 +1,7 @@
+.idea
+.settings
+/.metadata
+/.recommenders
+.classpath
+.project
+/RemoteSystemsTempFiles
